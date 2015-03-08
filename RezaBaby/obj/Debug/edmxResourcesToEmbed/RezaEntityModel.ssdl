@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="RezaDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="FirstThing">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="What" Type="nvarchar" MaxLength="200" />
+    <Property Name="When" Type="date" Nullable="false" />
+    <Property Name="Where" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="FirstThingDetail">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Body" Type="nvarchar" MaxLength="500" Nullable="false" />
+    <Property Name="FirstId" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_FirstThingDetail_0">
+    <End Role="FirstThing" Type="Self.FirstThing" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="FirstThingDetail" Type="Self.FirstThingDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FirstThing">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="FirstThingDetail">
+        <PropertyRef Name="FirstId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="RezaDBModelStoreContainer">
+    <EntitySet Name="FirstThing" EntityType="Self.FirstThing" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FirstThingDetail" EntityType="Self.FirstThingDetail" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_FirstThingDetail_0" Association="Self.FK_FirstThingDetail_0">
+      <End Role="FirstThing" EntitySet="FirstThing" />
+      <End Role="FirstThingDetail" EntitySet="FirstThingDetail" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

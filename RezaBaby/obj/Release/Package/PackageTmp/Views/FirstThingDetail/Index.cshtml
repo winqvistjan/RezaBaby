@@ -1,0 +1,17 @@
+﻿@model RezaBaby.FirstThing
+
+@{
+    ViewBag.Title = "Reza's first things";
+}
+
+<h2>@Model.What</h2>
+
+@Html.Partial("_Detail", Model.FirstThingDetails)
+
+<p>
+    @if (User.Identity.IsAuthenticated)
+    {
+        @Html.ActionLink("Create New", "Create", new { firstId = Model.ID })
+    }
+</p>
+

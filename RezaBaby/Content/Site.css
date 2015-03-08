@@ -1,0 +1,180 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/*Reza Baby Start*/
+
+/*MyFont Start*/
+ @font-face {         
+     font-family: "JrBaby";         
+     src: url('../fonts/jlrbaby.ttf');       
+ }
+ #more1, #back1, #gallery2, #gallery1 {         
+     font-family: "JrBaby" !important;
+     color: orangered;
+ }
+ @font-face {
+	font-family: 'SansationBold';
+	src: url("../fonts/SansationBold.eot");
+	src: local("SansationBold"), url("../fonts/SansationBold.woff") format("woff"), url("../fonts/SansationBold.ttf") format("truetype");
+}
+ h1, h2 {         
+     font-family: 'Comic Sans MS';
+     color: orangered;
+     text-shadow : 2px 4px 5px silver;
+ }
+ p, span {         
+     font-family: "SansationBold" !important;
+ }
+ /*MyFont End*/
+/*.floatLeft {
+    float: left;
+}*/
+/*Index Start*/
+#firstPage {
+    text-align: center;
+}
+/*Index End*/
+/*Growth Start*/
+#growth2 {
+    display: none;
+}
+
+#growthHeader {
+    font-size: large;
+}
+
+#more1 {
+    color:blue;
+    font-size: large;
+}
+
+#back1 {
+    color: blue;
+    font-size: large;
+}
+/*Growth End*/
+
+/*Slider Start*/
+/*body, h1, ul, li {
+	margin: 0; padding: 0; border: 0;
+}
+
+body {
+	background: #e8dbcb url(images/bg-texture.jpg);
+}*/
+
+#nextPrev {
+    width: 300px;
+    display: block;
+    margin:auto;
+}
+
+#container {
+	width: 1095px; margin: -40px auto;
+	position: relative;
+}
+
+/*h1 {
+	width: 262px; height: 226px; margin: 0 auto; position: relative; top: 100px;
+	background: url(images/harley-logo.png); text-indent: -9999px; z-index: 10;
+}*/
+
+div#slideshow {
+    width: auto;
+    height: auto;
+    text-align: center;
+	overflow: scroll; /* Allows the slides to be viewed using scrollbar if Javascript isn't available */ 
+}
+
+div#slideshow ul#nav {
+	display: none;
+	list-style: none;
+    /*text-align: center;*/
+	/*position: relative; top: 10px; z-index: 15;*/
+}
+	
+div#slideshow ul#nav li#prev {
+    margin-bottom: auto;
+	float: left;
+}
+
+div#slideshow ul#nav li#next {
+    margin-bottom: auto;
+	float: right;
+    margin-right: 40px;
+}
+
+div#slideshow ul#nav li a {
+	display: block;
+    width: 30px; 
+    height: 30px;
+    text-indent: -9999px;
+}
+
+div#slideshow ul#nav li#prev a {
+    background: url(../Content/Images/GalleryPort/prev.png);
+}
+
+div#slideshow ul#nav li#next a {
+	background: url(../Content/Images/GalleryPort/next.png);
+}
+
+div#slideshow ul#slides {
+	list-style: none;
+    width:  272px; 
+    height: 352px;
+    border:  15px solid #ccc;
+    background-color: #eee;
+    display: block;
+    margin:auto;
+}
+
+div#slideshow ul#galleryPort {
+	list-style: none;
+    width:  272px; 
+    height: 352px;
+    border:  15px solid #ccc;
+    background-color: #eee;
+    display: block;
+    margin:auto;
+}
+
+div#slideshow ul#slides li {
+	margin: 0 0 20px 0;
+}
+
+div#slideshow ul#galleryPort li {
+	margin: 0 0 20px 0;
+}
+
+/*Slider End*/
+
+/*Gallery Start*/
+#GalleryLandscape {
+    display: none;
+}
+/*Gallery End*/
+
+/*Reza Baby End*/
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}

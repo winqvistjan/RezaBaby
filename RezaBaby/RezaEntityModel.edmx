@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="RezaDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="FirstThing">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="What" Type="nvarchar" MaxLength="200" />
+          <Property Name="When" Type="date" Nullable="false" />
+          <Property Name="Where" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="FirstThingDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Body" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="FirstId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_FirstThingDetail_0">
+          <End Role="FirstThing" Type="Self.FirstThing" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="FirstThingDetail" Type="Self.FirstThingDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FirstThing">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FirstThingDetail">
+              <PropertyRef Name="FirstId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RezaDBModelStoreContainer">
+          <EntitySet Name="FirstThing" EntityType="Self.FirstThing" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FirstThingDetail" EntityType="Self.FirstThingDetail" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_FirstThingDetail_0" Association="Self.FK_FirstThingDetail_0">
+            <End Role="FirstThing" EntitySet="FirstThing" />
+            <End Role="FirstThingDetail" EntitySet="FirstThingDetail" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RezaDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="FirstThing">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="What" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="When" Type="DateTime" Precision="0" Nullable="false" />
+          <Property Name="Where" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="FirstThingDetails" Relationship="RezaDBModel.FK_FirstThingDetail_0" FromRole="FirstThing" ToRole="FirstThingDetail" />
+        </EntityType>
+        <EntityContainer Name="RezaDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="FirstThing" EntityType="Self.FirstThing" />
+          <EntitySet Name="FirstThingDetails" EntityType="RezaDBModel.FirstThingDetail" />
+          <AssociationSet Name="FK_FirstThingDetail_0" Association="RezaDBModel.FK_FirstThingDetail_0">
+            <End Role="FirstThing" EntitySet="FirstThing" />
+            <End Role="FirstThingDetail" EntitySet="FirstThingDetails" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="FirstThingDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Body" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="FirstId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="FirstThing" Relationship="RezaDBModel.FK_FirstThingDetail_0" FromRole="FirstThingDetail" ToRole="FirstThing" />
+        </EntityType>
+        <Association Name="FK_FirstThingDetail_0">
+          <End Type="RezaDBModel.FirstThing" Role="FirstThing" Multiplicity="1" />
+          <End Type="RezaDBModel.FirstThingDetail" Role="FirstThingDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FirstThing">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FirstThingDetail">
+              <PropertyRef Name="FirstId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RezaDBModelStoreContainer" CdmEntityContainer="RezaDBEntities">
+          <EntitySetMapping Name="FirstThing">
+            <EntityTypeMapping TypeName="RezaDBModel.FirstThing">
+              <MappingFragment StoreEntitySet="FirstThing">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="What" ColumnName="What" />
+                <ScalarProperty Name="When" ColumnName="When" />
+                <ScalarProperty Name="Where" ColumnName="Where" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FirstThingDetails">
+            <EntityTypeMapping TypeName="RezaDBModel.FirstThingDetail">
+              <MappingFragment StoreEntitySet="FirstThingDetail">
+                <ScalarProperty Name="FirstId" ColumnName="FirstId" />
+                <ScalarProperty Name="Body" ColumnName="Body" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

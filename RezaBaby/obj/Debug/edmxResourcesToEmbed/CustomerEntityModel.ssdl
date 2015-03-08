@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CustomerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Asiakas">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="15" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="15" />
+  </EntityType>
+  <EntityContainer Name="CustomerModelStoreContainer">
+    <EntitySet Name="Asiakas" EntityType="Self.Asiakas" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

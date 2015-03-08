@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="RezaDBModelStoreContainer" CdmEntityContainer="RezaDBEntities">
+    <EntitySetMapping Name="FirstThing">
+      <EntityTypeMapping TypeName="RezaDBModel.FirstThing">
+        <MappingFragment StoreEntitySet="FirstThing">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="What" ColumnName="What" />
+          <ScalarProperty Name="When" ColumnName="When" />
+          <ScalarProperty Name="Where" ColumnName="Where" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FirstThingDetails">
+      <EntityTypeMapping TypeName="RezaDBModel.FirstThingDetail">
+        <MappingFragment StoreEntitySet="FirstThingDetail">
+          <ScalarProperty Name="FirstId" ColumnName="FirstId" />
+          <ScalarProperty Name="Body" ColumnName="Body" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

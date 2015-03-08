@@ -1,0 +1,47 @@
+﻿@model IEnumerable<RezaBaby.FirstThingDetail>
+
+@{
+    ViewBag.Title = "Reza's first things";
+
+    string picture = ".jpg";
+    bool addPicture = true;
+}
+
+<table class="table">    
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Body)
+        </td>
+        <td>
+            @*@Html.DisplayFor(modelItem => item.FirstId)*@
+            @Html.HiddenFor(modelItem => item.FirstId)
+        </td>
+        <td>
+            @if (User.Identity.IsAuthenticated)
+            {
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID })
+                @Html.ActionLink(" | Delete", "Delete", new { id = item.ID })
+            }
+        </td>
+    </tr>
+    if (addPicture)
+    {
+        <tr>
+            <td>
+                <figure class="floatLeft">
+                    <img src="@Href("~/Content/Images/Reza_" + item.FirstId + @picture)" alt="No picture" />
+                    <figcaption>@item.FirstThing.What</figcaption>
+                </figure>
+            </td>
+        </tr>
+        addPicture = false;
+    }
+}
+
+</table>
+
+<div>
+    @Html.ActionLink("Back to List", "Index", "FirstThings")
+</div>
