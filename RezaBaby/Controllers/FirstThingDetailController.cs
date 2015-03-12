@@ -78,27 +78,42 @@ namespace RezaBaby.Controllers
 
                     WebCache.Remove(cacheIndexKeyFirstThingDetails);
                     // Insert media start
-                    // The maximum allowed file size is 100MB.
-                    if (file.ContentLength > 100 * 1024 * 1024)
+                    if (file != null)
                     {
-                        return RedirectToAction("UploadTooBig");
-                    }
-                    //specify the container name
-                    string containerName = "mycontainer";
-                    
-                    for (int fileNum = 0; fileNum < Request.Files.Count; fileNum++)
-                    {
-                        string fileName = Path.GetFileName(Request.Files[fileNum].FileName);
-                        string filePath = Path.GetFullPath(Request.Files[fileNum].FileName);
-                        blobFileMapperList.Add(new FileBlobNameMapper(fileName, filePath));
-                    }
-                    
-                    AsyncBlockBlobUpload blobUploadManager = new AsyncBlockBlobUpload();
-                    AsyncBlockBlobUploadCaller caller = new AsyncBlockBlobUploadCaller(blobUploadManager.UploadBlockBlobsInParallel);
-                    caller.BeginInvoke(blobFileMapperList, containerName, new AsyncCallback(OnUploadBlockBlobsInParallelCompleted), null);
+                        // The maximum allowed file size is 200MB.
+                        if (file.ContentLength > 100 * 1024 * 1024)
+                        {
+                            ModelState.AddModelError("", "Your file is too large, maximum allowed size is: 100 MB ");
+                            return View(firstThingDetail);
+                            //return RedirectToAction("UploadTooBig");
+                        }
+                        //specify the container name
+                        string containerName = "mycontainer";
 
+                        for (int fileNum = 0; fileNum < Request.Files.Count; fileNum++)
+                        {
+                            string fileName = Path.GetFileName(Request.Files[fileNum].FileName);
+                            string filePath = Path.GetFullPath(Request.Files[fileNum].FileName);
+                            // Validate file Start
+                            string[] AllowedFileExtensions = new string[] { ".jpg", ".JPG", ".png", ".PNG", ".gif", ".GIF", ".mp4", ".MP4", };
+                            
+                            if (!AllowedFileExtensions.Contains(fileName.Substring(fileName.LastIndexOf('.'))))
+                            {
+                                ModelState.AddModelError("", "You can upload only jpg, png, gif, and mp4 extension file");
+                                return View(firstThingDetail);
+                            }
+                            // Validate file End
+                            blobFileMapperList.Add(new FileBlobNameMapper(fileName, filePath));
+                        }
+
+                        AsyncBlockBlobUpload blobUploadManager = new AsyncBlockBlobUpload();
+                        AsyncBlockBlobUploadCaller caller = new AsyncBlockBlobUploadCaller(blobUploadManager.UploadBlockBlobsInParallel);
+                        caller.BeginInvoke(blobFileMapperList, containerName, new AsyncCallback(OnUploadBlockBlobsInParallelCompleted), null);
+                    }
                     // Insert media end
 
+                    // OK
+                    ModelState.Clear();
                     return RedirectToAction("Index", new { id = firstThingDetail.FirstId });
                 }
 

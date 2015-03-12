@@ -18,6 +18,8 @@ namespace RezaBaby
     {
         private const int MaxBlockSize = 2097152; // Approx. 2MB chunk size
 
+        // Aja Install-Package WindowsAxure.Storage
+        // Lisää Microsoft.WindowsAzure.ServiceRuntime referenssi
             //this you specify from app.config         
             //CloudStorageAccount storageAccount = CloudStorageAccount.Parse("YourCloudStorageConnectionString");
             CloudStorageAccount storageAccount =
@@ -61,6 +63,18 @@ namespace RezaBaby
 
                     // Retrieve reference to a blob and set the stream read and write size to minimum
                     CloudBlockBlob blockBlob = container.GetBlockBlobReference(blobName);
+
+                    string[] AllowedFileExtensions = new string[] { ".mp4", ".MP4" };
+
+                    if (AllowedFileExtensions.Contains(blobName))
+                    {
+                        blockBlob.Properties.ContentType = "video/mp4";
+                    }
+                    else
+                    {
+                        blockBlob.Properties.ContentType = "application/octet-stream";
+                    }
+                    //
                     blockBlob.StreamWriteSizeInBytes = 1048576;
                     blockBlob.StreamMinimumReadSizeInBytes = 1048576;
                     blockBlob.Metadata.Add("username", "kunal");
