@@ -2,7 +2,6 @@
 
 @{
     ViewBag.Title = "Reza's first things";
-    DateTime shortDate;
 }
 
 <h2>Reza's first things</h2>
@@ -34,7 +33,6 @@
         </td>
         <td>
             @Html.Label(item.When.ToString("dd") + '/' + item.When.ToString("MM") + '/' + item.When.ToString("yyyy"))
-            @*@Html.DisplayFor(modelItem => item.When)*@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Where)

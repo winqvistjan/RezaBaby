@@ -187,6 +187,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="AsyncBlockBlobUpload.cs" />
     <Compile Include="BlobOperationStatus.cs" />
+    <Compile Include="CloudFile.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\FirstThingDetailController.cs" />
     <Compile Include="Controllers\FirstThingsController.cs" />
@@ -206,6 +207,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\CloudFilesModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

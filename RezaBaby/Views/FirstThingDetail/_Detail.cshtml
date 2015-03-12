@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Reza's first things";
-
+    IEnumerable<CloudFile> allFiles = ViewBag.Media;
     string picture = ".jpg";
     bool addPicture = true;
 }
@@ -15,7 +15,6 @@
             @Html.DisplayFor(modelItem => item.Body)
         </td>
         <td>
-            @*@Html.DisplayFor(modelItem => item.FirstId)*@
             @Html.HiddenFor(modelItem => item.FirstId)
         </td>
         <td>
@@ -41,6 +40,15 @@
 }
 
 </table>
+
+@foreach (var mediaItem in allFiles)
+{
+    if (mediaItem.MimeType == "application/octet-stream")
+    {
+        <img src="@mediaItem.URL" alt="No picture" height="100" width="80">
+        <br />
+    }
+}
 
 <div>
     @Html.ActionLink("Back to List", "Index", "FirstThings")

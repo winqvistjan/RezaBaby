@@ -64,9 +64,9 @@ namespace RezaBaby
                     // Retrieve reference to a blob and set the stream read and write size to minimum
                     CloudBlockBlob blockBlob = container.GetBlockBlobReference(blobName);
 
-                    string[] AllowedFileExtensions = new string[] { ".mp4", ".MP4" };
-
-                    if (AllowedFileExtensions.Contains(blobName))
+                    //string[] AllowedFileExtensions = new string[] { ".mp4", ".MP4" };
+                    //
+                    if (blobName.Contains(".mp4") || blobName.Contains(".MP4"))
                     {
                         blockBlob.Properties.ContentType = "video/mp4";
                     }

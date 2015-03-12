@@ -1,5 +1,9 @@
-﻿using System;
+﻿using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Blob;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
@@ -7,6 +11,8 @@ using System.Runtime.Remoting.Messaging;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
+
+using RezaBaby.Models;
 
 namespace RezaBaby.Controllers
 {
@@ -42,6 +48,22 @@ namespace RezaBaby.Controllers
 
                 if (firstThings != null)
                 {
+                    // Get media files start
+                    CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
+                    CloudConfigurationManager.GetSetting("StorageConnectionString"));
+                    CloudBlobClient storageClient = storageAccount.CreateCloudBlobClient();
+                    CloudBlobContainer storageContainer = storageClient.GetContainerReference(
+                        ConfigurationManager.AppSettings.Get("CloudStorageContainerReference"));
+                    CloudFilesModel blobsList = new
+                        CloudFilesModel(storageContainer.ListBlobs(useFlatBlobListing: true));
+                    
+                    List<CloudFile> mediaFiles = new List<CloudFile>();
+                    foreach (CloudFile item in blobsList.Files)
+                    {
+                        mediaFiles.Add(item);
+                    }
+                    ViewBag.Media = mediaFiles;
+                    // Get media files end
                     return View(firstThings);
                 }
                 else
