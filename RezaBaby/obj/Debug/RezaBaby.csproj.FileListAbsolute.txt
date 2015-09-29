@@ -155,3 +155,10 @@ C:\GitHub\RezaBaby\RezaBaby\bin\ko\System.Spatial.resources.dll
 C:\GitHub\RezaBaby\RezaBaby\bin\ru\System.Spatial.resources.dll
 C:\GitHub\RezaBaby\RezaBaby\bin\zh-Hans\System.Spatial.resources.dll
 C:\GitHub\RezaBaby\RezaBaby\bin\zh-Hant\System.Spatial.resources.dll
+C:\GitHub\RezaBaby\RezaBaby\bin\ImageResizer.dll
+C:\GitHub\RezaBaby\RezaBaby\bin\ImageResizer.Plugins.SeamCarving.dll
+C:\GitHub\RezaBaby\RezaBaby\bin\ImageResizer.xml
+C:\GitHub\RezaBaby\RezaBaby\bin\ImageResizer.Plugins.SeamCarving.xml
+C:\GitHub\RezaBaby\RezaBaby\bin\Microsoft.WindowsAzure.ServiceRuntime.dll
+C:\GitHub\RezaBaby\RezaBaby\bin\WindowsAzureTelemetryEvents.dll
+C:\GitHub\RezaBaby\RezaBaby\bin\WindowsAzureEventSource.dll

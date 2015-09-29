@@ -27,5 +27,8 @@ namespace RezaBaby
     
         public virtual DbSet<FirstThing> FirstThing { get; set; }
         public virtual DbSet<FirstThingDetail> FirstThingDetails { get; set; }
+        public virtual DbSet<FirstThingMedia> FirstThingMedias { get; set; }
+        public virtual DbSet<Album> Albums { get; set; }
+        public virtual DbSet<AlbumMedia> AlbumMedias { get; set; }
     }
 }

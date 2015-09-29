@@ -1,0 +1,108 @@
+﻿@model RezaBaby.Album
+
+@{
+    ViewBag.Title = "Album";
+    IEnumerable<AlbumMedia> allFiles = ViewBag.Media;
+}
+
+<h2>@Model.AlbumName</h2>
+
+<div>
+    @if (User.Identity.IsAuthenticated)
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ID })
+        @Html.ActionLink(" | Back to List", "Index")
+    }
+    else
+    {
+        @Html.ActionLink("Back to List", "Index")
+    }
+</div>
+
+<div>
+    <hr />
+
+    <div class="row">
+        @foreach (var mediaItem in allFiles)
+        {
+            if (mediaItem.MimeType != "video/mp4")
+            {
+                if (Model.ID == mediaItem.AlbumId)
+                {
+                    if (mediaItem.Orientation == "P")
+                    {
+                        <div class="col-md-4 col-sm-6">
+                            <figure class="marginTop">
+                                <img class="portraitImage img-responsive" src="@mediaItem.URL" alt="No picture" />
+                            </figure>
+                        </div>
+                    }
+                }
+            }
+        }
+     </div>
+</div>
+<div>
+    <hr />
+
+    <div class="row">
+        @foreach (var mediaItem in allFiles)
+        {
+            if (mediaItem.MimeType != "video/mp4")
+            {
+                if (Model.ID == mediaItem.AlbumId)
+                {
+                    if (mediaItem.Orientation == "L")
+                    {
+                        <div class="col-md-4 col-sm-6">
+                            <figure class="marginTop">
+                                <img class="landscapeImage img-responsive" src="@mediaItem.URL" alt="No picture" />
+                            </figure>
+                        </div>
+                    }
+                }
+            }
+        }
+    </div>
+</div>
+<div>
+    <hr />
+
+    <div class="row">
+        @foreach (var mediaItem in allFiles)
+        {
+            if (mediaItem.MimeType == "video/mp4")
+            {
+                if (Model.ID == mediaItem.AlbumId)
+                {
+                    <div class="col-md-4">
+                        <video controls="controls" class="movie img-responsive" preload="auto">
+                            <source src="@mediaItem.URL" type="video/mp4" />
+                            <source src="@mediaItem.URL" type="video/webm" />
+                            <source src="@mediaItem.URL" type="video/ogg" />
+                            <p>Your browser does not support HTML5</p>/
+                        </video>
+                    </div>
+                }
+            }
+        }
+    </div>        
+</div>
+@*<div class="container">
+    <h2>Responsive Embed</h2>
+    <div class="embed-responsive embed-responsive-16by9">
+        <iframe class="embed-responsive-item" src="http://www.youtube.com/embed/XGSy3_Czz8k"></iframe>
+    </div>
+</div>*@
+<div>
+    @if (User.Identity.IsAuthenticated)
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ID })
+        @Html.ActionLink(" | Back to List", "Index")
+    }
+    else
+    {
+        @Html.ActionLink("Back to List", "Index")
+    }
+</div>
+

@@ -17,6 +17,17 @@
       <End Role="FirstThing" EntitySet="FirstThing" />
       <End Role="FirstThingDetail" EntitySet="FirstThingDetails" />
     </AssociationSet>
+    <EntitySet Name="FirstThingMedias" EntityType="RezaDBModel.FirstThingMedia" />
+    <AssociationSet Name="FK_FirstThingMedia_0" Association="RezaDBModel.FK_FirstThingMedia_0">
+      <End Role="FirstThingDetail" EntitySet="FirstThingDetails" />
+      <End Role="FirstThingMedia" EntitySet="FirstThingMedias" />
+    </AssociationSet>
+    <EntitySet Name="Albums" EntityType="RezaDBModel.Album" />
+    <EntitySet Name="AlbumMedias" EntityType="RezaDBModel.AlbumMedia" />
+    <AssociationSet Name="FK_AlbumMedia_0" Association="RezaDBModel.FK_AlbumMedia_0">
+      <End Role="Album" EntitySet="Albums" />
+      <End Role="AlbumMedia" EntitySet="AlbumMedias" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="FirstThingDetail">
     <Key>
@@ -26,6 +37,7 @@
     <Property Name="Body" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
     <Property Name="FirstId" Type="Int32" Nullable="false" />
     <NavigationProperty Name="FirstThing" Relationship="RezaDBModel.FK_FirstThingDetail_0" FromRole="FirstThingDetail" ToRole="FirstThing" />
+    <NavigationProperty Name="FirstThingMedias" Relationship="RezaDBModel.FK_FirstThingMedia_0" FromRole="FirstThingDetail" ToRole="FirstThingMedia" />
   </EntityType>
   <Association Name="FK_FirstThingDetail_0">
     <End Type="RezaDBModel.FirstThing" Role="FirstThing" Multiplicity="1" />
@@ -36,6 +48,65 @@
       </Principal>
       <Dependent Role="FirstThingDetail">
         <PropertyRef Name="FirstId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="FirstThingMedia">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstThingDetailId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="FirstThingDetail" Relationship="RezaDBModel.FK_FirstThingMedia_0" FromRole="FirstThingMedia" ToRole="FirstThingDetail" />
+    <Property Name="FileName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="URL" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="MimeType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Orientation" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="FK_FirstThingMedia_0">
+    <End Type="RezaDBModel.FirstThingDetail" Role="FirstThingDetail" Multiplicity="1" />
+    <End Type="RezaDBModel.FirstThingMedia" Role="FirstThingMedia" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FirstThingDetail">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="FirstThingMedia">
+        <PropertyRef Name="FirstThingDetailId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Album">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AlbumName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="URL" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AlbumMedias" Relationship="RezaDBModel.FK_AlbumMedia_0" FromRole="Album" ToRole="AlbumMedia" />
+  </EntityType>
+  <EntityType Name="AlbumMedia">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AlbumId" Type="Int32" Nullable="false" />
+    <Property Name="FileName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="URL" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="MimeType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Album" Relationship="RezaDBModel.FK_AlbumMedia_0" FromRole="AlbumMedia" ToRole="Album" />
+    <Property Name="Orientation" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="FK_AlbumMedia_0">
+    <End Type="RezaDBModel.Album" Role="Album" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="RezaDBModel.AlbumMedia" Role="AlbumMedia" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Album">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="AlbumMedia">
+        <PropertyRef Name="AlbumId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

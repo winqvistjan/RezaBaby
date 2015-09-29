@@ -4,7 +4,7 @@
     ViewBag.Title = "Reza's first things";
 }
 
-<h2>Reza's first things</h2>
+<h1>Reza's first things</h1>
 
 <p>
     @if (User.Identity.IsAuthenticated)
@@ -12,44 +12,48 @@
         @Html.ActionLink("Create New", "Create")
     }
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.What)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.When)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Where)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.What)
-        </td>
-        <td>
-            @Html.Label(item.When.ToString("dd") + '/' + item.When.ToString("MM") + '/' + item.When.ToString("yyyy"))
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Where)
-        </td>
-        <td>
-            @if (User.Identity.IsAuthenticated)
-            {
-                @Html.ActionLink("Edit", "Edit", new { id=item.ID })
-                @Html.ActionLink(" | Details", "Index", "FirstThingDetail", new { id = item.ID }, null)
-                @Html.ActionLink(" | Delete", "Delete", new { id = item.ID })
-            }
-            else
-            {
-                @Html.ActionLink("Details", "Index", "FirstThingDetail", new { id = item.ID }, null)
-            }
-        </td>
-    </tr>
-}
+<div class="table-responsive">
+    <table class="table table-hover">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.What)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.When)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Where)
+            </th>
+            <th></th>
+        </tr>
 
-</table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.What)
+                </td>
+                <td>
+                    @Html.Label(item.When.ToString("dd") + '/' + item.When.ToString("MM") + '/' + item.When.ToString("yyyy"))
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Where)
+                </td>
+                <td>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ID })
+                        @Html.ActionLink(" | Details", "Index", "FirstThingDetail", new { id = item.ID }, null)
+                        @Html.ActionLink(" | Delete", "Delete", new { id = item.ID })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Details", "Index", "FirstThingDetail", new { id = item.ID }, null)
+                    }
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

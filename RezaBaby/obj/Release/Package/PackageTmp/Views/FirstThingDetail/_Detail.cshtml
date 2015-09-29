@@ -2,44 +2,92 @@
 
 @{
     ViewBag.Title = "Reza's first things";
-
-    string picture = ".jpg";
-    bool addPicture = true;
+    IEnumerable<FirstThingMedia> allFiles = ViewBag.Media;
 }
 
-<table class="table">    
+<table class="table">
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Body)
-        </td>
-        <td>
-            @*@Html.DisplayFor(modelItem => item.FirstId)*@
-            @Html.HiddenFor(modelItem => item.FirstId)
-        </td>
-        <td>
-            @if (User.Identity.IsAuthenticated)
-            {
-                @Html.ActionLink("Edit", "Edit", new { id = item.ID })
-                @Html.ActionLink(" | Delete", "Delete", new { id = item.ID })
-            }
-        </td>
-    </tr>
-    if (addPicture)
+    @foreach (var item in Model)
     {
         <tr>
             <td>
-                <figure class="floatLeft">
-                    <img src="@Href("~/Content/Images/Reza_" + item.FirstId + @picture)" alt="No picture" />
-                    <figcaption>@item.FirstThing.What</figcaption>
-                </figure>
+                @Html.DisplayFor(modelItem => item.Body)
+            </td>
+            <td>
+                @Html.HiddenFor(modelItem => item.FirstId)
+            </td>
+            <td>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID })
+                    @Html.ActionLink(" | Delete", "Delete", new { id = item.ID })
+                }
             </td>
         </tr>
-        addPicture = false;
-    }
-}
+        foreach (var mediaItem in allFiles)
+        {
+            if (mediaItem.MimeType != "video/mp4")
+            {
+                if (item.ID == mediaItem.FirstThingDetailId)
+                {
+                    if (mediaItem.Orientation == "P")
+                    {
+                        <tr>
+                            <td>
+                                <figure class="marginTop">
+                                    <img class="portraitImage" src="@mediaItem.URL" alt="No picture" />
+                                    <figcaption><span>@item.FirstThing.What</span></figcaption>
+                                </figure>
 
+                            </td>
+                        </tr>
+                    }
+                }
+            }
+        }
+        foreach (var mediaItem in allFiles)
+        {
+            if (mediaItem.MimeType != "video/mp4")
+            {
+                if (item.ID == mediaItem.FirstThingDetailId)
+                {
+                    if (mediaItem.Orientation == "L")
+                    {
+                        <tr>
+                            <td>
+                                <figure class="marginTop">
+                                    <img class="landscapeImage" src="@mediaItem.URL" alt="No picture" />
+                                    <figcaption><span>@item.FirstThing.What</span></figcaption>
+                                </figure>
+
+                            </td>
+                        </tr>
+                    }
+                }
+            }
+        }
+        <!--Video Start-->
+        foreach (var mediaItem in allFiles)
+        {
+            if (mediaItem.MimeType == "video/mp4")
+            {
+                if (item.ID == mediaItem.FirstThingDetailId)
+                {
+                        <tr>
+                            <td>
+                                <video controls="controls" class="movie img-responsive" preload="auto">
+                                    <source src="@mediaItem.URL" type="video/mp4" />
+                                    <source src="@mediaItem.URL" type="video/webm" />
+                                    <source src="@mediaItem.URL" type="video/ogg" />
+                                    <p>Your browser does not support HTML5</p>/
+                                </video>
+                            </td>
+                        </tr>
+                }
+            }
+        }
+        <!--Video End-->
+    }
 </table>
 
 <div>

@@ -2,15 +2,16 @@
 
 @{
     ViewBag.Title = "Edit";
+    IEnumerable<FirstThingMedia> allFiles = ViewBag.Media;
+    int rowNumber = 0;
 }
 
 <h2>Edit</h2>
 
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -25,9 +26,7 @@
         </div>
 
         <div class="form-group">
-            @*@Html.LabelFor(model => model.FirstId, htmlAttributes: new { @class = "control-label col-md-2" })*@
             <div class="col-md-10">
-                @*@Html.EditorFor(model => model.FirstId, new { htmlAttributes = new { @class = "form-control" } })*@
                 @Html.HiddenFor(model => model.FirstId, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.FirstId, "", new { @class = "text-danger" })
             </div>
@@ -40,6 +39,84 @@
         </div>
     </div>
 }
+
+<hr />
+@using (Html.BeginForm("Add", "FirstThingDetail", FormMethod.Post,
+
+new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <h2>Add media</h2>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <p class="text-danger" id="errorMessage"></p>
+            <p><input type="text" id="firstThingID" name="firstThingID" hidden value="@Model.ID" /></p>
+            <p><input type="text" id="returnID" name="returnID" hidden value="@Model.FirstId" /></p>
+            <input type="file" id="fileToUpload" name="file" multiple="multiple" />
+            <input type="submit" id="btnSubmit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+}
+<hr />
+
+<form action="/FirstThingDetail/Transform" method="POST">
+    @Html.AntiForgeryToken()
+    <table class="table">
+        
+        @foreach (var mediaItem in allFiles)
+        {
+            if (mediaItem.MimeType != "video/mp4")
+            {
+                if (Model.ID == mediaItem.FirstThingDetailId)
+                {
+                    <tr>
+                        <td>
+                            <figure class="floatLeft">
+                                <img src="@mediaItem.URL" alt="No picture" />
+                            </figure>
+                            <p><input type="checkbox" id="deletePicture" name="deletePicture" value=@rowNumber> Delete picture</p>
+                            <p><input type="checkbox" id="pictureNumber" name="pictureNumber" value=@rowNumber> Picture to modify</p>
+                            <p><input type="checkbox" id="rotateLeft" name="rotateLeft" value="Left"> Rotate left</p>
+                            <p><input type="checkbox" id="rotateRight" name="rotateRight" value="Right"> Rotate right</p>
+                            <p><input type="checkbox" id="landscape" name="landscape" value="Landscape"> Landscape</p>
+                            <p><input type="checkbox" id="portrait" name="portrait" value="Portrait"> Portrait</p>
+                            <p><input type="text" id="pictureName" name="pictureName" hidden value="@mediaItem.FileName" /></p>
+                            <p><input type="text" id="firstThingID" name="stringFirstThingID" hidden value="@Model.FirstId" /></p>
+                            <input type="Submit" name="Transform" value="Transform" />
+                        </td>
+                    </tr>
+                    rowNumber++;
+                }
+            }
+            if (mediaItem.MimeType == "video/mp4")
+            {
+                if (Model.ID == mediaItem.FirstThingDetailId)
+                {
+                    <tr>
+                        <td>
+                            <video controls="controls" class="movie img-responsive" preload="auto">
+                                <source src="@mediaItem.URL" type="video/mp4" />
+                                <source src="@mediaItem.URL" type="video/webm" />
+                                <source src="@mediaItem.URL" type="video/ogg" />
+                                <p>Your browser does not support HTML5</p>/
+                            </video>
+                            <p><input type="checkbox" id="deletePicture" name="deletePicture" value=@rowNumber> Delete video</p>
+                            <p><input type="checkbox" id="pictureNumber" name="pictureNumber" value=@rowNumber> Video to modify</p>
+                            <p><input type="checkbox" id="rotateLeft" name="rotateLeft" value="Left"> Rotate left</p>
+                            <p><input type="checkbox" id="rotateRight" name="rotateRight" value="Right"> Rotate right</p>
+                            <p><input type="checkbox" id="landscape" name="landscape" value="Landscape"> Landscape</p>
+                            <p><input type="checkbox" id="portrait" name="portrait" value="Portrait"> Portrait</p>
+                            <p><input type="text" id="pictureName" name="pictureName" hidden value="@mediaItem.FileName" /></p>
+                            <p><input type="text" id="firstThingID" name="stringFirstThingID" hidden value="@Model.FirstId" /></p>
+                            <input type="Submit" name="Transform" value="Transform" />
+                        </td>
+                    </tr>
+                    rowNumber++;
+                }
+            }
+        }
+    </table>
+</form>
 
 <div>
     @Html.ActionLink("Back to List", "Index")

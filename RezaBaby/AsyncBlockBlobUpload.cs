@@ -8,6 +8,11 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Helpers;
+
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using ImageResizer;
 
 namespace RezaBaby
 {
@@ -34,16 +39,55 @@ namespace RezaBaby
                 //upload every file from list to blob in parallel (multitasking)
                 Parallel.ForEach(fileBlobNameMapperList, fileBlobNameMapper =>
                 {
-                    string blobName = fileBlobNameMapper.BlobName;
+                    try
+                    {
+                        string blobName = fileBlobNameMapper.BlobName;
 
-                    //read file contents in byte array
-                    byte[] fileContent = File.ReadAllBytes(fileBlobNameMapper.FilePath);
+                        //read file contents in byte array
+                        byte[] fileContent = File.ReadAllBytes(fileBlobNameMapper.FilePath);
+                        BlobOperationStatus blobStatus = null;
+                        // Check if picture or video start
+                        if (blobName.Contains(".mp4") || blobName.Contains(".MP4"))
+                        {
+                            blobStatus = UploadBlockBlobInternal(fileContent, containerName, blobName);
+                        }
+                        else
+                        {
+                            // Resize picture Start
+                            byte[] newFileContent = null;
+                            WebImage photo = new WebImage(fileContent);
 
-                    //call private method to actually perform upload of files to blob storage
-                    BlobOperationStatus blobStatus = UploadBlockBlobInternal(fileContent, containerName, blobName);
+                            if (photo != null)
+                            {
+                                if (photo.Height > photo.Width)
+                                {
+                                    // Portrait
+                                    photo.Resize(width: 260, height: 346, preserveAspectRatio: true, preventEnlarge: false);
+                                    newFileContent = photo.GetBytes();
+                                }
+                                else
+                                {
+                                    // Landscape
+                                    photo.Resize(width: 260, height: 195, preserveAspectRatio: true, preventEnlarge: false);
+                                    newFileContent = photo.GetBytes();
+                                }
+                            }
+                            // Resize picture End
 
-                    //add the status of every blob upload operation to list.
-                    blobOperationStatusList.Add(blobStatus);
+                            //call private method to actually perform upload of files to blob storage
+                            blobStatus = UploadBlockBlobInternal(newFileContent, containerName, blobName);
+                        }
+                        // Check if picture or video end
+
+                        //add the status of every blob upload operation to list.
+                        blobOperationStatusList.Add(blobStatus);
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine(ex);
+                        //this.RedirectToAction("/ErrorManager/ServerError");
+                        throw ex;
+                    }
                 });
 
                 return blobOperationStatusList;
@@ -64,17 +108,15 @@ namespace RezaBaby
                     // Retrieve reference to a blob and set the stream read and write size to minimum
                     CloudBlockBlob blockBlob = container.GetBlockBlobReference(blobName);
 
-                    //string[] AllowedFileExtensions = new string[] { ".mp4", ".MP4" };
-                    //
                     if (blobName.Contains(".mp4") || blobName.Contains(".MP4"))
                     {
                         blockBlob.Properties.ContentType = "video/mp4";
                     }
                     else
                     {
-                        blockBlob.Properties.ContentType = "application/octet-stream";
+                        blockBlob.Properties.ContentType = "image/jpeg";
                     }
-                    //
+                    
                     blockBlob.StreamWriteSizeInBytes = 1048576;
                     blockBlob.StreamMinimumReadSizeInBytes = 1048576;
                     blockBlob.Metadata.Add("username", "kunal");

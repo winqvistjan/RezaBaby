@@ -14,10 +14,16 @@ namespace RezaBaby
     
     public partial class FirstThingDetail
     {
+        public FirstThingDetail()
+        {
+            this.FirstThingMedias = new HashSet<FirstThingMedia>();
+        }
+    
         public int ID { get; set; }
         public string Body { get; set; }
         public int FirstId { get; set; }
     
         public virtual FirstThing FirstThing { get; set; }
+        public virtual ICollection<FirstThingMedia> FirstThingMedias { get; set; }
     }
 }

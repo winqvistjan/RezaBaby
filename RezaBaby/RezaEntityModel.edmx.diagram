@@ -8,6 +8,11 @@
         <EntityTypeShape EntityType="RezaDBModel.FirstThing" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="RezaDBModel.FirstThingDetail" Width="1.5" PointX="3" PointY="0.875" />
         <AssociationConnector Association="RezaDBModel.FK_FirstThingDetail_0" />
+        <EntityTypeShape EntityType="RezaDBModel.FirstThingMedia" Width="1.5" PointX="5.25" PointY="1" />
+        <AssociationConnector Association="RezaDBModel.FK_FirstThingMedia_0" />
+        <EntityTypeShape EntityType="RezaDBModel.Album" Width="1.5" PointX="0.75" PointY="5.125" />
+        <EntityTypeShape EntityType="RezaDBModel.AlbumMedia" Width="1.5" PointX="3" PointY="4.875" />
+        <AssociationConnector Association="RezaDBModel.FK_AlbumMedia_0" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

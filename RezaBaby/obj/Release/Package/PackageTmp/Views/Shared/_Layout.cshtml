@@ -3,9 +3,12 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <title>@ViewBag.Title - Reza's baby book</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <script src="http://maps.googleapis.com/maps/api/js"></script>
+    @*<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">*@
     <link rel="stylesheet" media="screen and (min-width: 1200px)" href="Desktop.css" />
 </head>
 <body>
@@ -20,16 +23,29 @@
                 @Html.ActionLink("Reza's baby book", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
+                <ul class="nav nav-tabs nav-justified" role="tablist">
+                    <li class="active"></li>
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    @*<li>@Html.ActionLink("About", "About", "Home")</li>*@
                     <li>@Html.ActionLink("Gallery", "Index", "Gallery")</li>
                     <li>@Html.ActionLink("Growth", "Index", "Growth")</li>
                     <li>@Html.ActionLink("GodParents", "Index", "GodParents")</li>
                     <li>@Html.ActionLink("First thing", "Index", "FirstThings")</li>
+                    <li>@Html.ActionLink("Albums", "Index", "Albums")</li>
+                    <li>@Html.ActionLink("Trips", "Index", "Trips")</li>
+                    <li>@Html.Partial("_LoginPartial")</li>
+                </ul>
+            </div>
+            @*<div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Gallery", "Index", "Gallery")</li>
+                    <li>@Html.ActionLink("Growth", "Index", "Growth")</li>
+                    <li>@Html.ActionLink("GodParents", "Index", "GodParents")</li>
+                    <li>@Html.ActionLink("First thing", "Index", "FirstThings")</li>
+                    <li>@Html.ActionLink("Albums", "Index", "Albums")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
-            </div>
+            </div>*@
         </div>
     </div>
     <div class="container body-content">

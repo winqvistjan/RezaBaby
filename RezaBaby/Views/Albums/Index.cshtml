@@ -1,0 +1,39 @@
+﻿@model IEnumerable<RezaBaby.Album>
+
+@{
+    ViewBag.Title = "Reza's Albums";
+}
+
+<h1>Reza's Albums</h1>
+
+<p>
+    @if (User.Identity.IsAuthenticated)
+    {
+        @Html.ActionLink("Create New", "Create")
+    }
+    
+</p>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4 col-sm-6">
+            <h2 class="text-center">@item.AlbumName</h2>
+            <figure class="text-center">
+                <img class="squareImage img-circle" src="@item.URL" alt="No picture" />
+            </figure>
+            <div class="text-center">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID })
+                    @Html.ActionLink(" | Have a look", "Details", new { id = item.ID })
+                    @Html.ActionLink(" | Delete", "Delete", new { id = item.ID })
+                }
+                else
+                {
+                    @Html.ActionLink("Have a look", "Details", new { id = item.ID })
+                }
+            </div>
+        </div>
+    }
+</div>

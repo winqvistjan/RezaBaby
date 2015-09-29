@@ -1,5 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="RezaDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Album">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AlbumName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="URL" Type="nvarchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="AlbumMedia">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AlbumId" Type="int" Nullable="false" />
+    <Property Name="FileName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="URL" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="MimeType" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Orientation" Type="nvarchar" MaxLength="1" />
+  </EntityType>
   <EntityType Name="FirstThing">
     <Key>
       <PropertyRef Name="ID" />
@@ -17,6 +36,31 @@
     <Property Name="Body" Type="nvarchar" MaxLength="500" Nullable="false" />
     <Property Name="FirstId" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="FirstThingMedia">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstThingDetailId" Type="int" Nullable="false" />
+    <Property Name="FileName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="URL" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="MimeType" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Orientation" Type="nvarchar" MaxLength="1" />
+  </EntityType>
+  <Association Name="FK_AlbumMedia_0">
+    <End Role="Album" Type="Self.Album" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AlbumMedia" Type="Self.AlbumMedia" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Album">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="AlbumMedia">
+        <PropertyRef Name="AlbumId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_FirstThingDetail_0">
     <End Role="FirstThing" Type="Self.FirstThing" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -31,12 +75,37 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_FirstThingMedia_0">
+    <End Role="FirstThingDetail" Type="Self.FirstThingDetail" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="FirstThingMedia" Type="Self.FirstThingMedia" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FirstThingDetail">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="FirstThingMedia">
+        <PropertyRef Name="FirstThingDetailId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="RezaDBModelStoreContainer">
+    <EntitySet Name="Album" EntityType="Self.Album" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AlbumMedia" EntityType="Self.AlbumMedia" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="FirstThing" EntityType="Self.FirstThing" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="FirstThingDetail" EntityType="Self.FirstThingDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FirstThingMedia" EntityType="Self.FirstThingMedia" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_AlbumMedia_0" Association="Self.FK_AlbumMedia_0">
+      <End Role="Album" EntitySet="Album" />
+      <End Role="AlbumMedia" EntitySet="AlbumMedia" />
+    </AssociationSet>
     <AssociationSet Name="FK_FirstThingDetail_0" Association="Self.FK_FirstThingDetail_0">
       <End Role="FirstThing" EntitySet="FirstThing" />
       <End Role="FirstThingDetail" EntitySet="FirstThingDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FirstThingMedia_0" Association="Self.FK_FirstThingMedia_0">
+      <End Role="FirstThingDetail" EntitySet="FirstThingDetail" />
+      <End Role="FirstThingMedia" EntitySet="FirstThingMedia" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

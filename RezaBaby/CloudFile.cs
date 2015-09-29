@@ -12,6 +12,7 @@ namespace RezaBaby
         public string URL { get; set; }
         public long Size { get; set; }
         public string MimeType { get; set; }
+        public int FirstThingDetailId { get; set; }
         public static CloudFile CreateFromIListBlobItem(IListBlobItem item)
         {
             if (item is CloudBlockBlob)
